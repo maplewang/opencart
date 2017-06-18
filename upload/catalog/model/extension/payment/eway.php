@@ -36,13 +36,13 @@ class ModelExtensionPaymentEway extends Model {
 		if ($this->config->get('eway_transaction_method') == 'payment') {
 			$cap = ",`capture_status` = '1'";
 		}
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "eway_order` SET `order_id` = '" . (int)$order_data['order_id'] . "', `created` = NOW(), `modified` = NOW(), `debug_data` = '" . $this->db->escape($order_data['debug_data']) . "', `amount` = '" . $this->currency->format($order_data['amount'], $order_data['currency_code'], false, false) . "', `currency_code` = '" . $this->db->escape($order_data['currency_code']) . "', `transaction_id` = '" . $this->db->escape($order_data['transaction_id']) . "'{$cap}");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "eway_order` SET `order_id` = '" . (int)$order_data['order_id'] . "', `created` = datetime('now'), `modified` = datetime('now'), `debug_data` = '" . $this->db->escape($order_data['debug_data']) . "', `amount` = '" . $this->currency->format($order_data['amount'], $order_data['currency_code'], false, false) . "', `currency_code` = '" . $this->db->escape($order_data['currency_code']) . "', `transaction_id` = '" . $this->db->escape($order_data['transaction_id']) . "'{$cap}");
 
 		return $this->db->getLastId();
 	}
 
 	public function addTransaction($eway_order_id, $type, $transactionid, $order_info) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "eway_transactions` SET `eway_order_id` = '" . (int)$eway_order_id . "', `created` = NOW(), `transaction_id` = '" . $this->db->escape($transactionid) . "', `type` = '" . $this->db->escape($type) . "', `amount` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "eway_transactions` SET `eway_order_id` = '" . (int)$eway_order_id . "', `created` = datetime('now'), `transaction_id` = '" . $this->db->escape($transactionid) . "', `type` = '" . $this->db->escape($type) . "', `amount` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "'");
 
 		return $this->db->getLastId();
 	}

@@ -278,7 +278,7 @@ class ModelExtensionOpenBayEbayOpenbay extends Model{
 		   `currency_value`           = '" . (double)$currency['value'] . "',
 		   `ip`                       = '',
 		   `date_added`               = '" . $this->db->escape($created_date) . "',
-		   `date_modified`            = NOW(),
+		   `date_modified`            = datetime('now'),
 		   `customer_id`              = 0
 		");
 
@@ -490,7 +490,7 @@ class ModelExtensionOpenBayEbayOpenbay extends Model{
 			   `payment_method`           = '" . $this->db->escape($order->payment->method) . "',
 			   `payment_address_format`   = '" . $address_format . "',
 			   `total`                    = '" . (double)$order->order->total . "',
-			   `date_modified`            = NOW()
+			   `date_modified`            = datetime('now')
 		   WHERE `order_id` = '" . $order_id . "'
 		   ");
 

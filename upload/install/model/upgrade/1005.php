@@ -33,7 +33,7 @@ class ModelUpgrade1005 extends Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "api");
 
 		if (!$query->num_rows) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "api (api_id, name, `key`, status, date_added, date_modified) values(1, 'json', '" . hash('sha512', mt_rand()) . "' , 1, now(), now())");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "api (api_id, name, `key`, status, date_added, date_modified) values(1, 'json', '" . hash('sha512', mt_rand()) . "' , 1, datetime('now'), datetime('now'))");
 		}
 
 		// customer

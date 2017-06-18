@@ -1,8 +1,8 @@
 <?php
 class ModelExtensionEvent extends Model {
 	public function addEvent($code, $trigger, $action, $status = 1) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($code) . "', `trigger` = '" . $this->db->escape($trigger) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = now()");
-	
+		//$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($code) . "', `trigger` = '" . $this->db->escape($trigger) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = datetime('now')");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` ( `code` ,  `trigger` ,  `action`,= `status` , `date_added` ) values('" . $this->db->escape($code) . "','" . $this->db->escape($trigger) . "','" . $this->db->escape($action) . "','" . (int)$status . "',  datetime('now'));");
 		return $this->db->getLastId();
 	}
 

@@ -1,19 +1,21 @@
 <?php
 class ModelDesignLayout extends Model {
 	public function addLayout($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = '" . $this->db->escape($data['name']) . "'");
-
+		//$this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = '" . $this->db->escape($data['name']) . "'");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "layout ( name ) values('" . $this->db->escape($data['name']). "');");
 		$layout_id = $this->db->getLastId();
 
 		if (isset($data['layout_route'])) {
 			foreach ($data['layout_route'] as $layout_route) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', store_id = '" . (int)$layout_route['store_id'] . "', route = '" . $this->db->escape($layout_route['route']) . "'");
+				//$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', store_id = '" . (int)$layout_route['store_id'] . "', route = '" . $this->db->escape($layout_route['route']) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route ( layout_id , store_id ,  route ) values('" . (int)$layout_id . "', '" . (int)$layout_route['store_id'] . "','" . $this->db->escape($layout_route['route']) . "');");
 			}
 		}
 
 		if (isset($data['layout_module'])) {
 			foreach ($data['layout_module'] as $layout_module) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_module SET layout_id = '" . (int)$layout_id . "', code = '" . $this->db->escape($layout_module['code']) . "', position = '" . $this->db->escape($layout_module['position']) . "', sort_order = '" . (int)$layout_module['sort_order'] . "'");
+				//$this->db->query("INSERT INTO " . DB_PREFIX . "layout_module SET layout_id = '" . (int)$layout_id . "', code = '" . $this->db->escape($layout_module['code']) . "', position = '" . $this->db->escape($layout_module['position']) . "', sort_order = '" . (int)$layout_module['sort_order'] . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_module ( layout_id , code ,  position , sort_order)  values('" . (int)$layout_id . "', '" . $this->db->escape($layout_module['code']) . "','" . $this->db->escape($layout_module['position']) . "', '" . (int)$layout_module['sort_order'] . "');");
 			}
 		}
 
@@ -27,7 +29,8 @@ class ModelDesignLayout extends Model {
 
 		if (isset($data['layout_route'])) {
 			foreach ($data['layout_route'] as $layout_route) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', store_id = '" . (int)$layout_route['store_id'] . "', route = '" . $this->db->escape($layout_route['route']) . "'");
+				//$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', store_id = '" . (int)$layout_route['store_id'] . "', route = '" . $this->db->escape($layout_route['route']) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route ( layout_id , store_id ,  route ) values('" . (int)$layout_id . "', '" . (int)$layout_route['store_id'] . "','" . $this->db->escape($layout_route['route']) . "');");
 			}
 		}
 
@@ -35,7 +38,8 @@ class ModelDesignLayout extends Model {
 
 		if (isset($data['layout_module'])) {
 			foreach ($data['layout_module'] as $layout_module) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_module SET layout_id = '" . (int)$layout_id . "', code = '" . $this->db->escape($layout_module['code']) . "', position = '" . $this->db->escape($layout_module['position']) . "', sort_order = '" . (int)$layout_module['sort_order'] . "'");
+				//$this->db->query("INSERT INTO " . DB_PREFIX . "layout_module SET layout_id = '" . (int)$layout_id . "', code = '" . $this->db->escape($layout_module['code']) . "', position = '" . $this->db->escape($layout_module['position']) . "', sort_order = '" . (int)$layout_module['sort_order'] . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_module ( layout_id , code ,  position , sort_order)  values('" . (int)$layout_id . "', '" . $this->db->escape($layout_module['code']) . "','" . $this->db->escape($layout_module['position']) . "', '" . (int)$layout_module['sort_order'] . "');");
 			}
 		}
 	}

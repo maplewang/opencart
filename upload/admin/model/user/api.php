@@ -1,14 +1,15 @@
 <?php
 class ModelUserApi extends Model {
 	public function addApi($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET name = '" . $this->db->escape($data['name']) . "', `key` = '" . $this->db->escape($data['key']) . "', status = '" . (int)$data['status'] . "', date_added = NOW(), date_modified = NOW()");
-
+		//$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET name = '" . $this->db->escape($data['name']) . "', `key` = '" . $this->db->escape($data['key']) . "', status = '" . (int)$data['status'] . "', date_added = datetime('now'), date_modified = datetime('now')");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` ( name ,  `key` , status , date_added ,  date_modified ) values('" . $this->db->escape($data['name']) . "','" . $this->db->escape($data['key']) . "', '" . (int)$data['status'] . "', datetime('now')  , datetime('now'));"); 
 		$api_id = $this->db->getLastId();
 
 		if (isset($data['api_ip'])) {
 			foreach ($data['api_ip'] as $ip) {
 				if ($ip) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET api_id = '" . (int)$api_id . "', ip = '" . $this->db->escape($ip) . "'");
+					//$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET api_id = '" . (int)$api_id . "', ip = '" . $this->db->escape($ip) . "'");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` ( api_id ,  ip ) values('" . (int)$api_id . "','" . $this->db->escape($ip) . "');");
 				}
 			}
 		}
@@ -17,14 +18,15 @@ class ModelUserApi extends Model {
 	}
 
 	public function editApi($api_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "api` SET name = '" . $this->db->escape($data['name']) . "', `key` = '" . $this->db->escape($data['key']) . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE api_id = '" . (int)$api_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "api` SET name = '" . $this->db->escape($data['name']) . "', `key` = '" . $this->db->escape($data['key']) . "', status = '" . (int)$data['status'] . "', date_modified = datetime('now') WHERE api_id = '" . (int)$api_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "api_ip WHERE api_id = '" . (int)$api_id . "'");
 
 		if (isset($data['api_ip'])) {
 			foreach ($data['api_ip'] as $ip) {
 				if ($ip) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET api_id = '" . (int)$api_id . "', ip = '" . $this->db->escape($ip) . "'");
+					//$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET api_id = '" . (int)$api_id . "', ip = '" . $this->db->escape($ip) . "'");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` ( api_id ,  ip ) values('" . (int)$api_id . "','" . $this->db->escape($ip) . "');");
 				}
 			}
 		}
@@ -86,7 +88,8 @@ class ModelUserApi extends Model {
 	}
 
 	public function addApiIp($api_id, $ip) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET api_id = '" . (int)$api_id . "', ip = '" . $this->db->escape($ip) . "'");
+		//$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET api_id = '" . (int)$api_id . "', ip = '" . $this->db->escape($ip) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` ( api_id ,  ip ) values('" . (int)$api_id . "','" . $this->db->escape($ip) . "');");
 	}
 
 	public function getApiIps($api_id) {
@@ -102,7 +105,8 @@ class ModelUserApi extends Model {
 	}
 
 	public function addApiSession($api_id, $data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_session` SET api_id = '" . (int)$api_id . "', token = '" . $this->db->escape($data['token']) . "', date_added = NOW(), date_modified = NOW()");
+		//$this->db->query("INSERT INTO `" . DB_PREFIX . "api_session` SET api_id = '" . (int)$api_id . "', token = '" . $this->db->escape($data['token']) . "', date_added = datetime('now'), date_modified = datetime('now')");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_session` ( api_id , token , date_added ,date_modified ) values('" . (int)$api_id . "', '" . $this->db->escape($data['token']) . "',".  datetime('now').",". datetime('now'). ");"); 
 	}
 
 	public function deleteApiSession($api_session_id) {

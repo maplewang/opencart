@@ -156,7 +156,7 @@ final class Etsy {
 			foreach ($response['data'] as $key => $options) {
 				$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_setting_option` WHERE  `key` = '" . $this->db->escape($key) . "' LIMIT 1");
 
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_setting_option` SET `data` = '" . $this->db->escape(serialize($options)) . "', `key` = '" . $this->db->escape($key) . "', `last_updated`  = now()");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_setting_option` SET `data` = '" . $this->db->escape(serialize($options)) . "', `key` = '" . $this->db->escape($key) . "', `last_updated`  = datetime('now')");
 
 				$this->log("settingsUpdate() - updated option: " . $key);
 			}

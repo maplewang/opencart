@@ -36,7 +36,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 			$settle_status = 0;
 		}
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "firstdata_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `order_ref` = '" . $this->db->escape($order_ref) . "', `tdate` = '" . $this->db->escape($transaction_date) . "', `date_added` = now(), `date_modified` = now(), `capture_status` = '" . (int)$settle_status . "', `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "firstdata_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `order_ref` = '" . $this->db->escape($order_ref) . "', `tdate` = '" . $this->db->escape($transaction_date) . "', `date_added` = datetime('now'), `date_modified` = datetime('now'), `capture_status` = '" . (int)$settle_status . "', `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . "'");
 
 		return $this->db->getLastId();
 	}
@@ -54,11 +54,11 @@ class ModelExtensionPaymentFirstdata extends Model {
 			$amount = 0.00;
 		}
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "firstdata_order_transaction` SET `firstdata_order_id` = '" . (int)$fd_order_id . "', `date_added` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (float)$amount . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "firstdata_order_transaction` SET `firstdata_order_id` = '" . (int)$fd_order_id . "', `date_added` = datetime('now'), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (float)$amount . "'");
 	}
 
 	public function addHistory($order_id, $order_status_id, $comment) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '0', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '0', comment = '" . $this->db->escape($comment) . "', date_added = datetime('now')");
 	}
 
 	public function logger($message) {
@@ -96,7 +96,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 		if ($existing_card->num_rows > 0) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "firstdata_card` SET `expire_month` = '" . $this->db->escape($month) . "', `expire_year` = '" . $this->db->escape($year) . "', `digits` = '" . $this->db->escape($digits) . "'");
 		} else {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "firstdata_card` SET `customer_id` = '" . (int)$customer_id . "', `date_added` = now(), `token` = '" . $this->db->escape($token) . "', `expire_month` = '" . $this->db->escape($month) . "', `expire_year` = '" . $this->db->escape($year) . "', `digits` = '" . $this->db->escape($digits) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "firstdata_card` SET `customer_id` = '" . (int)$customer_id . "', `date_added` = datetime('now'), `token` = '" . $this->db->escape($token) . "', `expire_month` = '" . $this->db->escape($month) . "', `expire_year` = '" . $this->db->escape($year) . "', `digits` = '" . $this->db->escape($digits) . "'");
 		}
 	}
 

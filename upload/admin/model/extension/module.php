@@ -1,7 +1,8 @@
 <?php
 class ModelExtensionModule extends Model {
 	public function addModule($code, $data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($data['name']) . "', `code` = '" . $this->db->escape($code) . "', `setting` = '" . $this->db->escape(json_encode($data)) . "'");
+		//$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($data['name']) . "', `code` = '" . $this->db->escape($code) . "', `setting` = '" . $this->db->escape(json_encode($data)) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "module` ( `name` , `code` , `setting`) values('" . $this->db->escape($data['name']) . "', '" . $this->db->escape($code) . "', '" . $this->db->escape(json_encode($data)) . "');");
 	}
 	
 	public function editModule($module_id, $data) {

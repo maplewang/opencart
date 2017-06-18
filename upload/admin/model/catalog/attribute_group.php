@@ -6,7 +6,8 @@ class ModelCatalogAttributeGroup extends Model {
 		$attribute_group_id = $this->db->getLastId();
 
 		foreach ($data['attribute_group_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group_description SET attribute_group_id = '" . (int)$attribute_group_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			//$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group_description SET attribute_group_id = '" . (int)$attribute_group_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group_description ( attribute_group_id , language_id ,name) values('" . (int)$attribute_group_id . "',  '" . (int)$language_id . "',  '" . $this->db->escape($value['name']) . "');");
 		}
 
 		return $attribute_group_id;
@@ -18,7 +19,8 @@ class ModelCatalogAttributeGroup extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_group_description WHERE attribute_group_id = '" . (int)$attribute_group_id . "'");
 
 		foreach ($data['attribute_group_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group_description SET attribute_group_id = '" . (int)$attribute_group_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			//$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group_description SET attribute_group_id = '" . (int)$attribute_group_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group_description ( attribute_group_id , language_id ,name) values('" . (int)$attribute_group_id . "',  '" . (int)$language_id . "',  '" . $this->db->escape($value['name']) . "');");
 		}
 	}
 

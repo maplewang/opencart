@@ -26,8 +26,8 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 					`qty`                       = '" . (int)$data['qty'] . "',
 					`smp_id`                    = '" . (int)$data['smp_id'] . "',
 					`sku`                       = '" . $this->db->escape($data['sku']) . "',
-					`created`                   = now(),
-					`modified`                  = now()
+					`created`                   = datetime('now'),
+					`modified`                  = datetime('now')
 				");
 
 				if (!empty($product_id)) {
@@ -42,7 +42,7 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 
 			if ($order_id != $order_line['order_id']) {
 				$this->openbay->ebay->log('addOrderLine() - Order ID has changed from "' . $order_line['order_id'] . '" to "' . $order_id . '"');
-				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_transaction` SET `order_id` = '" . (int)$order_id . "', `modified` = now() WHERE `txn_id` = '" . $this->db->escape((string)$data['txn_id']) . "' AND `item_id` = '" . $this->db->escape((string)$data['item_id']) . "' LIMIT 1");
+				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_transaction` SET `order_id` = '" . (int)$order_id . "', `modified` = datetime('now') WHERE `txn_id` = '" . $this->db->escape((string)$data['txn_id']) . "' AND `item_id` = '" . $this->db->escape((string)$data['item_id']) . "' LIMIT 1");
 
 				//if the order id has changed then remove the old order details
 				$this->delete($order_line['order_id']);
@@ -50,12 +50,12 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 
 			if ($order_line['smp_id'] != $data['smp_id']) {
 				$this->openbay->ebay->log('addOrderLine() - SMP ID for orderLine has changed from "' . $order_line['smp_id'] . '" to "' . $data['smp_id'] . '"');
-				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_transaction` SET `smp_id` = '" . $data['smp_id'] . "', `modified` = now() WHERE `txn_id` = '" . $this->db->escape((string)$data['txn_id']) . "' AND `item_id` = '" . $this->db->escape((string)$data['item_id']) . "' LIMIT 1");
+				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_transaction` SET `smp_id` = '" . $data['smp_id'] . "', `modified` = datetime('now') WHERE `txn_id` = '" . $this->db->escape((string)$data['txn_id']) . "' AND `item_id` = '" . $this->db->escape((string)$data['item_id']) . "' LIMIT 1");
 			}
 
 			if ($order_line['containing_order_id'] != $data['containing_order_id']) {
 				$this->openbay->ebay->log('addOrderLine() - Containing order ID for orderLine has changed from "' . $order_line['containing_order_id'] . '" to "' . $data['containing_order_id'] . '"');
-				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_transaction` SET `containing_order_id` = '" . $this->db->escape($data['containing_order_id']) . "', `modified` = now() WHERE `txn_id` = '" . $this->db->escape((string)$data['txn_id']) . "' AND `item_id` = '" . $this->db->escape((string)$data['item_id']) . "' LIMIT 1");
+				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_transaction` SET `containing_order_id` = '" . $this->db->escape($data['containing_order_id']) . "', `modified` = datetime('now') WHERE `txn_id` = '" . $this->db->escape((string)$data['txn_id']) . "' AND `item_id` = '" . $this->db->escape((string)$data['item_id']) . "' LIMIT 1");
 			}
 		}
 		$this->openbay->ebay->log('addOrderLine() - Done');
@@ -135,7 +135,7 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 	}
 
 	public function updatePaymentDetails($order_id, $order) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = '" . $this->db->escape($order->payment->method) . "', `total` = '" . (double)$order->order->total . "', `date_modified` = NOW() WHERE `order_id` = '" . (int)$order_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = '" . $this->db->escape($order->payment->method) . "', `total` = '" . (double)$order->order->total . "', `date_modified` = datetime('now') WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
 	public function getHistory($order_id) {
@@ -171,9 +171,9 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 		$notify = $this->config->get('ebay_update_notify');
 
 		if ($order_info) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = datetime('now') WHERE order_id = '" . (int)$order_id . "'");
 
-			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = datetime('now')");
 
 			if ($notify) {
 				if (version_compare(VERSION, '2.2', '>') == true) {
@@ -237,8 +237,8 @@ class ModelExtensionOpenBayEbayOrder extends Model{
 		$notify = $this->config->get('ebay_confirm_notify');
 
 		if ($order_info && !$order_info['order_status_id']) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
-			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
+			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = datetime('now') WHERE order_id = '" . (int)$order_id . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = datetime('now')");
 
 			if (isset($order_info['email']) && !empty($order_info['email']) && $notify == 1){
 				$order_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");

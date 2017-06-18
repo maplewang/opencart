@@ -3,7 +3,7 @@ class ModelExtensionTotalCoupon extends Model {
 	public function getCoupon($code) {
 		$status = true;
 
-		$coupon_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon` WHERE code = '" . $this->db->escape($code) . "' AND ((date_start = '0000-00-00' OR date_start < NOW()) AND (date_end = '0000-00-00' OR date_end > NOW())) AND status = '1'");
+		$coupon_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon` WHERE code = '" . $this->db->escape($code) . "' AND ((date_start = '0000-00-00' OR date_start < datetime('now')) AND (date_end = '0000-00-00' OR date_end > datetime('now'))) AND status = '1'");
 
 		if ($coupon_query->num_rows) {
 			if ($coupon_query->row['total'] > $this->cart->getSubTotal()) {
@@ -217,7 +217,7 @@ class ModelExtensionTotalCoupon extends Model {
 			}
 
 			if ($status) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "coupon_history` SET coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "', order_id = '" . (int)$order_info['order_id'] . "', customer_id = '" . (int)$order_info['customer_id'] . "', amount = '" . (float)$order_total['value'] . "', date_added = NOW()");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "coupon_history` SET coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "', order_id = '" . (int)$order_info['order_id'] . "', customer_id = '" . (int)$order_info['customer_id'] . "', amount = '" . (float)$order_total['value'] . "', date_added = datetime('now')");
 			} else {
 				return $this->config->get('config_fraud_status_id');
 			}

@@ -165,7 +165,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 					customer_group_id = '" . (int)$customer_data['customer_group_id'] . "',
 					password = '',
 					status = '" . (int)$customer_data['status'] . "',
-					date_added = NOW()");
+					date_added = datetime('now')");
 
 			$customer_id = $this->db->getLastId();
 		}

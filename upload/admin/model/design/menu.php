@@ -1,13 +1,14 @@
 <?php
 class ModelDesignMenu extends Model {
 	public function addMenu($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "menu SET store_id = '" . (int)$data['store_id'] . "', type = '" .  $this->db->escape($data['type']) . "', link = '" .  $this->db->escape($data['link']) . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "'");
-	
+		//$this->db->query("INSERT INTO " . DB_PREFIX . "menu SET store_id = '" . (int)$data['store_id'] . "', type = '" .  $this->db->escape($data['type']) . "', link = '" .  $this->db->escape($data['link']) . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "'");
+	$this->db->query("INSERT INTO " . DB_PREFIX . "menu ( store_id , type , link ,  sort_order , status)values('" . (int)$data['store_id'] . "', '" .  $this->db->escape($data['type']) . "', '" .  $this->db->escape($data['link']) . "','" . (int)$data['sort_order'] . "', '" . (int)$data['status'] . "');");
 		$menu_id = $this->db->getLastId();
 	
 		if (isset($data['menu_description'])) {
 			foreach ($data['menu_description'] as $language_id => $value) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu_id . "', language_id = '" . (int)$language_id . "', name = '" .  $this->db->escape($value['name']) . "'");
+				//$this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu_id . "', language_id = '" . (int)$language_id . "', name = '" .  $this->db->escape($value['name']) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "menu_description ( menu_id , language_id , name) values('" . (int)$menu_id . "', '" . (int)$language_id . "', '" .  $this->db->escape($value['name']) . "');");
 			}
 		}	
 	}
@@ -19,7 +20,8 @@ class ModelDesignMenu extends Model {
 
 		if (isset($data['menu_description'])) {
 			foreach ($data['menu_description'] as $language_id => $value) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu_id . "', language_id = '" . (int)$language_id . "', name = '" .  $this->db->escape($value['name']) . "'");
+				//$this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu_id . "', language_id = '" . (int)$language_id . "', name = '" .  $this->db->escape($value['name']) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "menu_description ( menu_id , language_id , name) values('" . (int)$menu_id . "', '" . (int)$language_id . "', '" .  $this->db->escape($value['name']) . "');");
 			}
 		}
 		
@@ -27,7 +29,8 @@ class ModelDesignMenu extends Model {
 		
 		if (isset($data['menu_description'])) {
 			foreach ($data['menu_description'] as $language_id => $value) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu_id . "', language_id = '" . (int)$language_id . "', name = '" .  $this->db->escape($value['name']) . "'");
+				//$this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu_id . "', language_id = '" . (int)$language_id . "', name = '" .  $this->db->escape($value['name']) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "menu_description ( menu_id , language_id , name) values('" . (int)$menu_id . "', '" . (int)$language_id . "', '" .  $this->db->escape($value['name']) . "');");
 			}
 		}		
 	}

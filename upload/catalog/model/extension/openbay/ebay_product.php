@@ -251,9 +251,9 @@ class ModelExtensionOpenBayEbayProduct extends Model {
 						`minimum`               = '1',
 						`status`                = '1',
 						" . $openstock_sql . "
-						`date_available`        = now(),
-						`date_added`            = now(),
-						`date_modified`         = now()
+						`date_available`        = datetime('now'),
+						`date_added`            = datetime('now'),
+						`date_modified`         = datetime('now')
 				");
 
 				$product_id = $this->db->getLastId();
@@ -521,7 +521,7 @@ class ModelExtensionOpenBayEbayProduct extends Model {
 	private function manufacturerExists($name) {
 		$this->openbay->ebay->log('Checking manufacturer: ' . $name);
 
-		$qry = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "manufacturer` WHERE LCASE(`name`) = '" . $this->db->escape(htmlspecialchars($name, ENT_COMPAT)) . "' LIMIT 1");
+		$qry = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "manufacturer` WHERE lower(`name`) = '" . $this->db->escape(htmlspecialchars($name, ENT_COMPAT)) . "' LIMIT 1");
 
 		if ($qry->num_rows != 0) {
 			return $qry->row['manufacturer_id'];
@@ -548,7 +548,7 @@ class ModelExtensionOpenBayEbayProduct extends Model {
 	private function weightClassExists($name) {
 		$this->openbay->ebay->log('Checking weight class: ' . $name);
 
-		$qry = $this->db->query("SELECT `weight_class_id` FROM `" . DB_PREFIX . "weight_class_description` WHERE LCASE(`title`) = '" . $this->db->escape(strtolower($name)) . "' LIMIT 1");
+		$qry = $this->db->query("SELECT `weight_class_id` FROM `" . DB_PREFIX . "weight_class_description` WHERE lower(`title`) = '" . $this->db->escape(strtolower($name)) . "' LIMIT 1");
 
 		if ($qry->num_rows != 0) {
 			return $qry->row['weight_class_id'];
@@ -568,7 +568,7 @@ class ModelExtensionOpenBayEbayProduct extends Model {
 	private function lengthClassExists($name) {
 		$this->openbay->ebay->log('Checking length class: ' . $name);
 
-		$qry = $this->db->query("SELECT `length_class_id` FROM `" . DB_PREFIX . "length_class_description` WHERE LCASE(`title`) = '" . $this->db->escape(strtolower($name)) . "' LIMIT 1");
+		$qry = $this->db->query("SELECT `length_class_id` FROM `" . DB_PREFIX . "length_class_description` WHERE lower(`title`) = '" . $this->db->escape(strtolower($name)) . "' LIMIT 1");
 
 		if ($qry->num_rows != 0) {
 			return $qry->row['length_class_id'];

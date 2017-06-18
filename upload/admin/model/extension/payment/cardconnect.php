@@ -311,11 +311,11 @@ class ModelExtensionPaymentCardConnect extends Model {
 	}
 
 	public function updateTransactionStatusByRetref($retref, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "cardconnect_order_transaction` SET `status` = '" . $this->db->escape($status) . "', `date_modified` = NOW() WHERE `retref` = '" . $this->db->escape($retref) . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "cardconnect_order_transaction` SET `status` = '" . $this->db->escape($status) . "', `date_modified` = datetime('now') WHERE `retref` = '" . $this->db->escape($retref) . "'");
 	}
 
 	public function addTransaction($cardconnect_order_id, $type, $retref, $amount, $status) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "cardconnect_order_transaction` SET `cardconnect_order_id` = '" . (int)$cardconnect_order_id . "', `type` = '" . $this->db->escape($type) . "', `retref` = '" . $this->db->escape($retref) . "', `amount` = '" . (float)$amount . "', `status` = '" . $this->db->escape($status) . "', `date_modified` = NOW(), `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "cardconnect_order_transaction` SET `cardconnect_order_id` = '" . (int)$cardconnect_order_id . "', `type` = '" . $this->db->escape($type) . "', `retref` = '" . $this->db->escape($retref) . "', `amount` = '" . (float)$amount . "', `status` = '" . $this->db->escape($status) . "', `date_modified` = datetime('now'), `date_added` = datetime('now')");
 	}
 
 	public function log($data) {

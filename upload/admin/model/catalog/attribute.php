@@ -1,12 +1,13 @@
 <?php
 class ModelCatalogAttribute extends Model {
 	public function addAttribute($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "attribute SET attribute_group_id = '" . (int)$data['attribute_group_id'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
-
+		//$this->db->query("INSERT INTO " . DB_PREFIX . "attribute SET attribute_group_id = '" . (int)$data['attribute_group_id'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "attribute ( attribute_group_id , sort_order) values('" . (int)$data['attribute_group_id'] . "', '" . (int)$data['sort_order'] . "');");
 		$attribute_id = $this->db->getLastId();
 
 		foreach ($data['attribute_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_description SET attribute_id = '" . (int)$attribute_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			//$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_description SET attribute_id = '" . (int)$attribute_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_description ( attribute_id ,  language_id , name)  values('" . (int)$attribute_id . "','" . (int)$language_id . "', '" . $this->db->escape($value['name']) . "');");
 		}
 
 		return $attribute_id;
@@ -18,7 +19,8 @@ class ModelCatalogAttribute extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_description WHERE attribute_id = '" . (int)$attribute_id . "'");
 
 		foreach ($data['attribute_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_description SET attribute_id = '" . (int)$attribute_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			//$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_description SET attribute_id = '" . (int)$attribute_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_description ( attribute_id ,  language_id , name)  values('" . (int)$attribute_id . "','" . (int)$language_id . "', '" . $this->db->escape($value['name']) . "');");
 		}
 	}
 

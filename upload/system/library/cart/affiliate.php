@@ -35,20 +35,29 @@ class Affiliate {
 	}
 
 	public function login($email, $password) {
-		$affiliate_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "affiliate WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND (password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('" . $this->db->escape($password) . "'))))) OR password = '" . $this->db->escape(md5($password)) . "') AND status = '1' AND approved = '1'");
-
+		//$affiliate_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "affiliate WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND (password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('" . $this->db->escape($password) . "'))))) OR password = '" . $this->db->escape(md5($password)) . "') AND status = '1' AND approved = '1'");
+		$affiliate_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "affiliate WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) ."'  AND status = '1' AND approved = '1';");
+		
 		if ($affiliate_query->num_rows) {
-			$this->session->data['affiliate_id'] = $affiliate_query->row['affiliate_id'];
+			
+			$salt = $affiliate_query->row['salt'];
+			$passphrase=$this->db->escape(password);
+			$encrypted = sha1($salt . sha1($salt . sha1($passphrase)));
+			$dbpassword= $affiliate_query->row['password'];
+			if ( $dbpassword !==  $encrypted ) { return false; }
+			else {
+				$this->session->data['affiliate_id'] = $affiliate_query->row['affiliate_id'];
 
-			$this->affiliate_id = $affiliate_query->row['affiliate_id'];
-			$this->firstname = $affiliate_query->row['firstname'];
-			$this->lastname = $affiliate_query->row['lastname'];
-			$this->email = $affiliate_query->row['email'];
-			$this->telephone = $affiliate_query->row['telephone'];
-			$this->fax = $affiliate_query->row['fax'];
-			$this->code = $affiliate_query->row['code'];
+				$this->affiliate_id = $affiliate_query->row['affiliate_id'];
+				$this->firstname = $affiliate_query->row['firstname'];
+				$this->lastname = $affiliate_query->row['lastname'];
+				$this->email = $affiliate_query->row['email'];
+				$this->telephone = $affiliate_query->row['telephone'];
+				$this->fax = $affiliate_query->row['fax'];
+				$this->code = $affiliate_query->row['code'];
 
-			return true;
+				return true;
+			}
 		} else {
 			return false;
 		}

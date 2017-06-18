@@ -1,8 +1,8 @@
 <?php
 class ModelUserUser extends Model {
 	public function addUser($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "user` SET username = '" . $this->db->escape($data['username']) . "', user_group_id = '" . (int)$data['user_group_id'] . "', salt = '" . $this->db->escape($salt = token(9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', image = '" . $this->db->escape($data['image']) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
-	
+		//$this->db->query("INSERT INTO `" . DB_PREFIX . "user` SET username = '" . $this->db->escape($data['username']) . "', user_group_id = '" . (int)$data['user_group_id'] . "', salt = '" . $this->db->escape($salt = token(9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', image = '" . $this->db->escape($data['image']) . "', status = '" . (int)$data['status'] . "', date_added = datetime('now')");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "user` ( username , user_group_id , salt ,password ,  firstname , lastname ,  email ,  image ,  status ,  date_added ) values( '" . $this->db->escape($data['username']) . "', '" . (int)$data['user_group_id'] . "',  '" . $this->db->escape($salt = token(9)) . "', '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', '" . $this->db->escape($data['firstname']) . "','" . $this->db->escape($data['lastname']) . "','" . $this->db->escape($data['email']) . "','" . $this->db->escape($data['image']) . "','" . (int)$data['status'] . "', datetime('now'));"); 
 		return $this->db->getLastId();
 	}
 
@@ -19,7 +19,7 @@ class ModelUserUser extends Model {
 	}
 
 	public function editCode($email, $code) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET code = '" . $this->db->escape($code) . "' WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET code = '" . $this->db->escape($code) . "' WHERE lower(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 
 	public function deleteUser($user_id) {
@@ -39,7 +39,7 @@ class ModelUserUser extends Model {
 	}
 
 	public function getUserByEmail($email) {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "user` WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "user` WHERE lower(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 
 		return $query->row;
 	}
@@ -101,7 +101,7 @@ class ModelUserUser extends Model {
 	}
 
 	public function getTotalUsersByEmail($email) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE lower(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 
 		return $query->row['total'];
 	}

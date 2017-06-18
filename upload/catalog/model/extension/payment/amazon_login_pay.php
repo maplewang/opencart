@@ -21,7 +21,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 
 		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
 
-		$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$customer_group_id . "', store_id = '" . (int)$this->config->get('config_store_id') . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']['account']) ? json_encode($data['custom_field']['account']) : '') . "', salt = '" . $this->db->escape($salt = token(9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', newsletter = '" . (isset($data['newsletter']) ? (int)$data['newsletter'] : 0) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', status = '1', approved = '" . (int)!$customer_group_info['approval'] . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$customer_group_id . "', store_id = '" . (int)$this->config->get('config_store_id') . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']['account']) ? json_encode($data['custom_field']['account']) : '') . "', salt = '" . $this->db->escape($salt = token(9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', newsletter = '" . (isset($data['newsletter']) ? (int)$data['newsletter'] : 0) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', status = '1', approved = '" . (int)!$customer_group_info['approval'] . "', date_added = datetime('now')");
 
 		$customer_id = $this->db->getLastId();
 
@@ -116,7 +116,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 	}
 
 	public function setOrderShipping($order_id, $has_free_shipping) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_login_pay_order` SET `order_id` = '" . (int)$order_id . "', `free_shipping` = '" . (int)$has_free_shipping . "',`date_added` = now(), `modified` = now() ");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_login_pay_order` SET `order_id` = '" . (int)$order_id . "', `free_shipping` = '" . (int)$has_free_shipping . "',`date_added` = datetime('now'), `modified` = datetime('now') ");
 		return $this->db->getLastId();
 	}
 
@@ -136,11 +136,11 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 	}
 
 	public function addAmazonOrderId($order_id, $amazon_authorization_id, $capture_status, $total, $currency_code) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_login_pay_order` SET `amazon_order_reference_id` = '" . $this->db->escape($this->session->data['lpa']['AmazonOrderReferenceId']) . "', `amazon_authorization_id` = '" . $this->db->escape($amazon_authorization_id) . "', `modified` = now(), `capture_status` = '" . $this->db->escape($capture_status) . "', `currency_code` = '" . $this->db->escape($currency_code) . "', `total` = '" . $total . "' WHERE `order_id` = '" . (int)$order_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_login_pay_order` SET `amazon_order_reference_id` = '" . $this->db->escape($this->session->data['lpa']['AmazonOrderReferenceId']) . "', `amazon_authorization_id` = '" . $this->db->escape($amazon_authorization_id) . "', `modified` = datetime('now'), `capture_status` = '" . $this->db->escape($capture_status) . "', `currency_code` = '" . $this->db->escape($currency_code) . "', `total` = '" . $total . "' WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
 	public function addTransaction($amazon_login_pay_order_id, $amazon_authorization_id, $amazon_capture_id, $type, $status, $total) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_login_pay_order_transaction` SET `amazon_login_pay_order_id` = '" . (int)$amazon_login_pay_order_id . "', `amazon_authorization_id` = '" . $this->db->escape($amazon_authorization_id) . "', `amazon_capture_id` = '" . $this->db->escape($amazon_capture_id) . "', `date_added` = now(), `type` = '" . $this->db->escape($type) . "', `status` = '" . $this->db->escape($status) . "', `amount` = '" . $total . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_login_pay_order_transaction` SET `amazon_login_pay_order_id` = '" . (int)$amazon_login_pay_order_id . "', `amazon_authorization_id` = '" . $this->db->escape($amazon_authorization_id) . "', `amazon_capture_id` = '" . $this->db->escape($amazon_capture_id) . "', `date_added` = datetime('now'), `type` = '" . $this->db->escape($type) . "', `status` = '" . $this->db->escape($status) . "', `amount` = '" . $total . "'");
 	}
 
 	public function closeOrderRef($amazon_order_reference_id) {

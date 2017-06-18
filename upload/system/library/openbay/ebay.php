@@ -1178,10 +1178,10 @@ final class Ebay {
 				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'listing_restrictions' LIMIT 1");
 
 				if ($qry->num_rows > 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['listing_restrictions'])) . "', `last_updated`  = now() WHERE `key` = 'listing_restrictions' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['listing_restrictions'])) . "', `last_updated`  = datetime('now') WHERE `key` = 'listing_restrictions' LIMIT 1");
 					$this->log('Updated listing_restrictions into ebay_setting_option table');
 				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'listing_restrictions', `data` = '" . $this->db->escape(serialize($response['listing_restrictions'])) . "', `last_updated`  = now()");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'listing_restrictions', `data` = '" . $this->db->escape(serialize($response['listing_restrictions'])) . "', `last_updated`  = datetime('now')");
 					$this->log('Inserted listing_restrictions into ebay_setting_option table');
 				}
 			} else {
@@ -1192,10 +1192,10 @@ final class Ebay {
 				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'product_details' LIMIT 1");
 
 				if ($qry->num_rows > 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = now() WHERE `key` = 'product_details' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = datetime('now') WHERE `key` = 'product_details' LIMIT 1");
 					$this->log('Updated product_details into ebay_setting_option table');
 				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'product_details', `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = now()");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'product_details', `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = datetime('now')");
 					$this->log('Inserted product_details into ebay_setting_option table');
 				}
 			} else {
@@ -1314,10 +1314,10 @@ final class Ebay {
 				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'dispatch_time_max' LIMIT 1");
 
 				if ($qry->num_rows > 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['dispatch_time_max'])) . "', `last_updated`  = now() WHERE `key` = 'dispatch_time_max' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['dispatch_time_max'])) . "', `last_updated`  = datetime('now') WHERE `key` = 'dispatch_time_max' LIMIT 1");
 					$this->log('Updated dispatch_time_max into ebay_setting_option table');
 				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'dispatch_time_max', `data` = '" . $this->db->escape(serialize($response['dispatch_time_max'])) . "', `last_updated`  = now()");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'dispatch_time_max', `data` = '" . $this->db->escape(serialize($response['dispatch_time_max'])) . "', `last_updated`  = datetime('now')");
 					$this->log('Inserted dispatch_time_max into ebay_setting_option table');
 				}
 			} else {
@@ -1329,10 +1329,10 @@ final class Ebay {
 				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'countries' LIMIT 1");
 
 				if ($qry->num_rows > 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['countries'])) . "', `last_updated`  = now() WHERE `key` = 'countries' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['countries'])) . "', `last_updated`  = datetime('now') WHERE `key` = 'countries' LIMIT 1");
 					$this->log('Updated countries into ebay_setting_option table');
 				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'countries', `data` = '" . $this->db->escape(serialize($response['countries'])) . "', `last_updated`  = now()");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'countries', `data` = '" . $this->db->escape(serialize($response['countries'])) . "', `last_updated`  = datetime('now')");
 					$this->log('Inserted countries into ebay_setting_option table');
 				}
 			} else {
@@ -1344,10 +1344,10 @@ final class Ebay {
 				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'returns' LIMIT 1");
 
 				if ($qry->num_rows > 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['returns'])) . "', `last_updated`  = now() WHERE `key` = 'returns' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['returns'])) . "', `last_updated`  = datetime('now') WHERE `key` = 'returns' LIMIT 1");
 					$this->log('Updated returns info in to ebay_setting_option table');
 				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'returns', `data` = '" . $this->db->escape(serialize($response['returns'])) . "', `last_updated`  = now()");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'returns', `data` = '" . $this->db->escape(serialize($response['returns'])) . "', `last_updated`  = datetime('now')");
 					$this->log('Inserted returns info in to ebay_setting_option table');
 				}
 			} else {
@@ -1359,10 +1359,10 @@ final class Ebay {
 				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'package_type' LIMIT 1");
 
 				if ($qry->num_rows > 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['package_type'])) . "', `last_updated`  = now() WHERE `key` = 'package_type' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['package_type'])) . "', `last_updated`  = datetime('now') WHERE `key` = 'package_type' LIMIT 1");
 					$this->log('Updated package_type info in to ebay_setting_option table');
 				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'package_type', `data` = '" . $this->db->escape(serialize($response['package_type'])) . "', `last_updated`  = now()");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'package_type', `data` = '" . $this->db->escape(serialize($response['package_type'])) . "', `last_updated`  = datetime('now')");
 					$this->log('Inserted package_type info in to ebay_setting_option table');
 				}
 			} else {
@@ -1374,10 +1374,10 @@ final class Ebay {
 				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'vat_enabled' LIMIT 1");
 
 				if ($qry->num_rows > 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . (int)$response['package_type'] . "', `last_updated`  = now() WHERE `key` = 'vat_enabled' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . (int)$response['package_type'] . "', `last_updated`  = datetime('now') WHERE `key` = 'vat_enabled' LIMIT 1");
 					$this->log('Updated vat_enabled in to ebay_setting_option table');
 				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'vat_enabled', `data` = '" . (int)$response['package_type'] . "', `last_updated`  = now()");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'vat_enabled', `data` = '" . (int)$response['package_type'] . "', `last_updated`  = datetime('now')");
 					$this->log('Inserted vat_enabled info in to ebay_setting_option table');
 				}
 			} else {
@@ -1389,10 +1389,10 @@ final class Ebay {
 				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'shipping_types' LIMIT 1");
 
 				if ($qry->num_rows > 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['shipping_types'])) . "', `last_updated`  = now() WHERE `key` = 'shipping_types' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['shipping_types'])) . "', `last_updated`  = datetime('now') WHERE `key` = 'shipping_types' LIMIT 1");
 					$this->log('Updated shipping_types info in to ebay_setting_option table');
 				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'shipping_types', `data` = '" . $this->db->escape(serialize($response['shipping_types'])) . "', `last_updated`  = now()");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'shipping_types', `data` = '" . $this->db->escape(serialize($response['shipping_types'])) . "', `last_updated`  = datetime('now')");
 					$this->log('Inserted shipping_types info in to ebay_setting_option table');
 				}
 			} else {
@@ -1404,10 +1404,10 @@ final class Ebay {
 				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'measurement_types' LIMIT 1");
 
 				if ($qry->num_rows > 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['measurement_types'])) . "', `last_updated`  = now() WHERE `key` = 'measurement_types' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['measurement_types'])) . "', `last_updated`  = datetime('now') WHERE `key` = 'measurement_types' LIMIT 1");
 					$this->log('Updated measurement_types info in to ebay_setting_option table');
 				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'measurement_types', `data` = '" . $this->db->escape(serialize($response['measurement_types'])) . "', `last_updated`  = now()");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'measurement_types', `data` = '" . $this->db->escape(serialize($response['measurement_types'])) . "', `last_updated`  = datetime('now')");
 					$this->log('Inserted measurement_types info in to ebay_setting_option table');
 				}
 			} else {
@@ -1419,10 +1419,10 @@ final class Ebay {
 				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'product_details' LIMIT 1");
 
 				if ($qry->num_rows > 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = now() WHERE `key` = 'product_details' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = datetime('now') WHERE `key` = 'product_details' LIMIT 1");
 					$this->log('Updated product_details info in to ebay_setting_option table');
 				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'product_details', `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = now()");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'product_details', `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = datetime('now')");
 					$this->log('Inserted product_details info in to ebay_setting_option table');
 				}
 			} else {

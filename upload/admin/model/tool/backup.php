@@ -14,17 +14,31 @@ class ModelToolBackup extends Model {
 
 	public function getTables() {
 		$table_data = array();
+		global $config;
+		if (($this->config->get('db_type')) == "CSQLite3") {
 
-		$query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
+			    $query = $this->db->query("SELECT name FROM sqlite_master WHERE type='table';");
+				foreach ($query->rows as $result) {
+					$strRes=$result['name'];
+					$strRes2=utf8_substr($result['name'], 0, strlen(DB_PREFIX));
+					if (utf8_substr($result['name'], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+						if (isset($result['name'])) {
+							$table_data[] = $result['name'];
+						}
+					}
+				}
+		}
+		else {		
+			$query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
 
-		foreach ($query->rows as $result) {
-			if (utf8_substr($result['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
-				if (isset($result['Tables_in_' . DB_DATABASE])) {
-					$table_data[] = $result['Tables_in_' . DB_DATABASE];
+			foreach ($query->rows as $result) {
+				if (utf8_substr($result['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+					if (isset($result['Tables_in_' . DB_DATABASE])) {
+						$table_data[] = $result['Tables_in_' . DB_DATABASE];
+					}
 				}
 			}
 		}
-
 		return $table_data;
 	}
 
@@ -43,8 +57,11 @@ class ModelToolBackup extends Model {
 			}
 
 			if ($status) {
-				$output .= 'TRUNCATE TABLE `' . $table . '`;' . "\n\n";
-
+				if (($this->config->get('db_type')) == "CSQLite3") {
+					$output .= 'DELETE FROM `' . $table . '`;' . "\n\n";
+				}else {
+					$output .= 'TRUNCATE TABLE `' . $table . '`;' . "\n\n";
+				}
 				$query = $this->db->query("SELECT * FROM `" . $table . "`");
 
 				foreach ($query->rows as $result) {

@@ -69,7 +69,7 @@ class ModelExtensionOpenBayEtsyOrder extends Model {
 	public function updateOrderStatus($order_id, $status_id) {
 		$this->openbay->etsy->log("Model updateOrderStatus Order ID: " . $order_id . ", Status ID: " . $status_id);
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_history` (`order_id`, `order_status_id`, `notify`, `comment`, `date_added`) VALUES (" . (int)$order_id . ", " . (int)$status_id . ", 0, '', NOW())");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_history` (`order_id`, `order_status_id`, `notify`, `comment`, `date_added`) VALUES (" . (int)$order_id . ", " . (int)$status_id . ", 0, '', datetime('now'))");
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `order_status_id` = " . (int)$status_id . " WHERE `order_id` = " . (int)$order_id);
 	}
@@ -200,8 +200,8 @@ class ModelExtensionOpenBayEtsyOrder extends Model {
 		   `forwarded_ip`             = '',
 		   `user_agent`               = '',
 		   `accept_language`          = '',
-		   `date_added`               = NOW(),
-		   `date_modified`            = NOW()
+		   `date_added`               = datetime('now'),
+		   `date_modified`            = datetime('now')
 		");
 
 		$order_id = $this->db->getLastId();

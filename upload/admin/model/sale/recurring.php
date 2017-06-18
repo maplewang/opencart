@@ -1,7 +1,7 @@
 <?php
 class ModelSaleRecurring extends Model {
 	public function getRecurrings($data) {
-		$sql = "SELECT `or`.order_recurring_id, `or`.order_id, `or`.reference, `or`.`status`, `or`.`date_added`, CONCAT(`o`.firstname, ' ', `o`.lastname) AS customer FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.order_id = `o`.order_id)";
+		$sql = "SELECT `or`.order_recurring_id, `or`.order_id, `or`.reference, `or`.`status`, `or`.`date_added`, (`o`.firstname || ' ' || `o`.lastname) AS customer FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.order_id = `o`.order_id)";
 
 		$implode = array();
 
@@ -18,7 +18,7 @@ class ModelSaleRecurring extends Model {
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "CONCAT(o.firstname, ' ', o.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "%'";
+			$implode[] = "(o.firstname || ' ' || o.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "%'";
 		}
 
 		if (!empty($data['filter_status'])) {
@@ -34,18 +34,18 @@ class ModelSaleRecurring extends Model {
 		} 
 			 
 		$sort_data = array(
-			'or.order_recurring_id',
-			'or.order_id',
-			'or.reference',
+			''or'.order_recurring_id',
+			''or'.order_id',
+			''or'.reference',
 			'customer',
-			'or.status',
-			'or.date_added'
+			''or'.status',
+			''or'.date_added'
 		);
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY or.order_recurring_id";
+			$sql .= " ORDER BY 'or'.order_recurring_id";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -175,7 +175,7 @@ class ModelSaleRecurring extends Model {
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] .= "CONCAT(o.firstname, ' ', o.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "%'";
+			$implode[] .= "(o.firstname || ' ' || o.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "%'";
 		}
 
 		if (!empty($data['filter_status'])) {

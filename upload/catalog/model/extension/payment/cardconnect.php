@@ -100,7 +100,7 @@ class ModelExtensionPaymentCardConnect extends Model {
 	}
 
 	public function addCard($cardconnect_order_id, $customer_id, $profileid, $token, $type, $account, $expiry) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "cardconnect_card` SET `cardconnect_order_id` = '" . (int)$cardconnect_order_id . "', `customer_id` = '" . (int)$customer_id . "', `profileid` = '" . $this->db->escape($profileid) . "', `token` = '" . $this->db->escape($token) . "', `type` = '" . $this->db->escape($type) . "', `account` = '" . $this->db->escape($account) . "', `expiry` = '" . $this->db->escape($expiry) . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "cardconnect_card` SET `cardconnect_order_id` = '" . (int)$cardconnect_order_id . "', `customer_id` = '" . (int)$customer_id . "', `profileid` = '" . $this->db->escape($profileid) . "', `token` = '" . $this->db->escape($token) . "', `type` = '" . $this->db->escape($type) . "', `account` = '" . $this->db->escape($account) . "', `expiry` = '" . $this->db->escape($expiry) . "', `date_added` = datetime('now')");
 	}
 
 	public function deleteCard($token, $customer_id) {
@@ -108,13 +108,13 @@ class ModelExtensionPaymentCardConnect extends Model {
 	}
 
 	public function addOrder($order_info, $payment_method) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "cardconnect_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `payment_method` = '" . $this->db->escape($payment_method) . "', `retref` = '" . $this->db->escape($order_info['retref']) . "', `authcode` = '" . $this->db->escape($order_info['authcode']) . "', `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "cardconnect_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `payment_method` = '" . $this->db->escape($payment_method) . "', `retref` = '" . $this->db->escape($order_info['retref']) . "', `authcode` = '" . $this->db->escape($order_info['authcode']) . "', `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "', `date_added` = datetime('now')");
 
 		return $this->db->getLastId();
 	}
 
 	public function addTransaction($cardconnect_order_id, $type, $status, $order_info) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "cardconnect_order_transaction` SET `cardconnect_order_id` = '" . (int)$cardconnect_order_id . "', `type` = '" . $this->db->escape($type) . "', `retref` = '" . $this->db->escape($order_info['retref']) . "', `amount` = '" . (float)$this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "', `status` = '" . $this->db->escape($status) . "', `date_modified` = NOW(), `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "cardconnect_order_transaction` SET `cardconnect_order_id` = '" . (int)$cardconnect_order_id . "', `type` = '" . $this->db->escape($type) . "', `retref` = '" . $this->db->escape($order_info['retref']) . "', `amount` = '" . (float)$this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "', `status` = '" . $this->db->escape($status) . "', `date_modified` = datetime('now'), `date_added` = datetime('now')");
 	}
 
 	public function getSettlementStatuses($merchant_id, $date) {
@@ -152,13 +152,13 @@ class ModelExtensionPaymentCardConnect extends Model {
 	}
 
 	public function updateTransactionStatusByRetref($retref, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "cardconnect_order_transaction` SET `status` = '" . $this->db->escape($status) . "', `date_modified` = NOW() WHERE `retref` = '" . $this->db->escape($retref) . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "cardconnect_order_transaction` SET `status` = '" . $this->db->escape($status) . "', `date_modified` = datetime('now') WHERE `retref` = '" . $this->db->escape($retref) . "'");
 	}
 
 	public function updateCronRunTime() {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = 'cardconnect_cron_time'");
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'cardconnect', `key` = 'cardconnect_cron_time', `value` = NOW(), `serialized` = '0'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'cardconnect', `key` = 'cardconnect_cron_time', `value` = datetime('now'), `serialized` = '0'");
 	}
 
 	public function log($data) {

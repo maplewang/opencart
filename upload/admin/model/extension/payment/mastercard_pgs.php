@@ -90,7 +90,7 @@ class ModelExtensionPaymentMastercardPGS extends Model {
 		);
 
 		foreach ($events as $trigger => $action) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code`='mastercard_pgs', `trigger`='" . $this->db->escape($trigger) . "', `action`='" . $this->db->escape($action) . "', status='1', date_added=NOW()");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code`='mastercard_pgs', `trigger`='" . $this->db->escape($trigger) . "', `action`='" . $this->db->escape($action) . "', status='1', date_added=datetime('now')");
 		}
 	}
 

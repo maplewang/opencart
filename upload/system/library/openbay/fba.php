@@ -164,7 +164,7 @@ class fba {
 	}
 
 	public function createFBAOrderID($order_id) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "fba_order` SET `order_id` = '" . (int)$order_id . "', `status` = 0, `created` = now()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "fba_order` SET `order_id` = '" . (int)$order_id . "', `status` = 0, `created` = datetime('now')");
 
 		return $this->db->getLastId();
 	}
@@ -182,7 +182,7 @@ class fba {
 	}
 
 	public function createFBAFulfillmentID($order_id, $type) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "fba_order_fulfillment` SET `created` = now(), `order_id` = '" . (int)$order_id . "', `type` = '" . (int)$type . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "fba_order_fulfillment` SET `created` = datetime('now'), `order_id` = '" . (int)$order_id . "', `type` = '" . (int)$type . "'");
 
 		$id = $this->db->getLastId();
 

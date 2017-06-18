@@ -1,8 +1,8 @@
 <?php
 class ModelSaleVoucher extends Model {
 	public function addVoucher($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "voucher SET code = '" . $this->db->escape($data['code']) . "', from_name = '" . $this->db->escape($data['from_name']) . "', from_email = '" . $this->db->escape($data['from_email']) . "', to_name = '" . $this->db->escape($data['to_name']) . "', to_email = '" . $this->db->escape($data['to_email']) . "', voucher_theme_id = '" . (int)$data['voucher_theme_id'] . "', message = '" . $this->db->escape($data['message']) . "', amount = '" . (float)$data['amount'] . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
-
+		//$this->db->query("INSERT INTO " . DB_PREFIX . "voucher SET code = '" . $this->db->escape($data['code']) . "', from_name = '" . $this->db->escape($data['from_name']) . "', from_email = '" . $this->db->escape($data['from_email']) . "', to_name = '" . $this->db->escape($data['to_name']) . "', to_email = '" . $this->db->escape($data['to_email']) . "', voucher_theme_id = '" . (int)$data['voucher_theme_id'] . "', message = '" . $this->db->escape($data['message']) . "', amount = '" . (float)$data['amount'] . "', status = '" . (int)$data['status'] . "', date_added = datetime('now')");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "voucher ( code ,  from_name , from_email ,  to_name , to_email ,  voucher_theme_id ,  message ,  amount ,  status ,  date_added) values('" . $this->db->escape($data['code']) . "','" . $this->db->escape($data['from_name']) . "', '" . $this->db->escape($data['from_email']) . "','" . $this->db->escape($data['to_name']) . "', '" . $this->db->escape($data['to_email']) . "','" . (int)$data['voucher_theme_id'] . "','" . $this->db->escape($data['message']) . "','" . (float)$data['amount'] . "','" . (int)$data['status'] . "', datetime('now')");
 		return $this->db->getLastId();
 	}
 
@@ -200,7 +200,7 @@ class ModelSaleVoucher extends Model {
 			$limit = 10;
 		}
 
-		$query = $this->db->query("SELECT vh.order_id, CONCAT(o.firstname, ' ', o.lastname) AS customer, vh.amount, vh.date_added FROM " . DB_PREFIX . "voucher_history vh LEFT JOIN `" . DB_PREFIX . "order` o ON (vh.order_id = o.order_id) WHERE vh.voucher_id = '" . (int)$voucher_id . "' ORDER BY vh.date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT vh.order_id, (o.firstname || ' ' || o.lastname) AS customer, vh.amount, vh.date_added FROM " . DB_PREFIX . "voucher_history vh LEFT JOIN `" . DB_PREFIX . "order` o ON (vh.order_id = o.order_id) WHERE vh.voucher_id = '" . (int)$voucher_id . "' ORDER BY vh.date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}

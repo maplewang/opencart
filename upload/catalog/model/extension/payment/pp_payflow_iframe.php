@@ -105,7 +105,7 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 			SET order_id = " . (int)$data['order_id'] . ",
 				transaction_reference = '" . $this->db->escape($data['transaction_reference']) . "',
 				transaction_type = '" . $this->db->escape($data['type']) . "',
-				`time` = NOW(),
+				`time` = datetime('now'),
 				`amount` = '" . $this->db->escape($data['amount']) .  "'
 		");
 	}

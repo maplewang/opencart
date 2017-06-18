@@ -1,7 +1,8 @@
 <?php
 class ModelExtensionModification extends Model {
 	public function addModification($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET code = '" . $this->db->escape($data['code']) . "', name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', link = '" . $this->db->escape($data['link']) . "', xml = '" . $this->db->escape($data['xml']) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
+		//$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET code = '" . $this->db->escape($data['code']) . "', name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', link = '" . $this->db->escape($data['link']) . "', xml = '" . $this->db->escape($data['xml']) . "', status = '" . (int)$data['status'] . "', date_added = datetime('now')");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "modification ( code ,  name , author ,  version , link ,  xml ,  status , date_added ) values('" . $this->db->escape($data['code']) . "','" . $this->db->escape($data['name']) . "', '" . $this->db->escape($data['author']) . "', '" . $this->db->escape($data['version']) . "','" . $this->db->escape($data['link']) . "','" . $this->db->escape($data['xml']) . "','" . (int)$data['status'] . "', datetime('now'));");
 	}
 
 	public function deleteModification($modification_id) {

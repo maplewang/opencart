@@ -33,7 +33,7 @@ class ControllerApiCustomer extends Controller {
 				$this->load->model('account/customer');
 
 				$customer_info = $this->model_account_customer->getCustomer($this->request->post['customer_id']);
-
+				$emailc=$this->customer->login($customer_info['email'], '', true);
 				if (!$customer_info || !$this->customer->login($customer_info['email'], '', true)) {
 					$json['error']['warning'] = $this->language->get('error_customer');
 				}

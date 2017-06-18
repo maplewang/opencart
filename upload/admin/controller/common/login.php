@@ -13,7 +13,17 @@ class ControllerCommonLogin extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->session->data['token'] = token(32);
+			//sqlite?
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_ip` WHERE api_id = '" . (int)$this->config->get('config_api_id') . "'");
 			
+			foreach ($query->rows as $result) {
+				$ip_data[] = $result['ip'];
+			}
+			//user less
+			if (!in_array($this->request->server['REMOTE_ADDR'], $ip_data)) {
+				//$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET api_id = '" . (int)$this->config->get('config_api_id') . "', ip = '" . $this->request->server['REMOTE_ADDR'] . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` ( api_id ,  ip )  values('" . (int)$this->config->get('config_api_id') . "','" . $this->request->server['REMOTE_ADDR'] . "');");
+			}
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0 || strpos($this->request->post['redirect'], HTTPS_SERVER) === 0)) {
 				$this->response->redirect($this->request->post['redirect'] . '&token=' . $this->session->data['token']);
 			} else {

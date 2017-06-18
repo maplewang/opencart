@@ -5,7 +5,8 @@ class ModelDesignLanguage extends Model {
 
 		if (isset($data['translation'])) {
 			foreach ($data['translation'] as $translation) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "translation SET store_id = '" . (int)$translation['store_id'] . "', language_id = '" . (int)$translation['language_id'] . "', route = '" . $this->db->escape($route) . "', `key` = '" . $this->db->escape($translation['key']) . "', value = '" . $this->db->escape($translation['value']) . "'");
+				//$this->db->query("INSERT INTO " . DB_PREFIX . "translation SET store_id = '" . (int)$translation['store_id'] . "', language_id = '" . (int)$translation['language_id'] . "', route = '" . $this->db->escape($route) . "', `key` = '" . $this->db->escape($translation['key']) . "', value = '" . $this->db->escape($translation['value']) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "translation ( store_id , language_id ,  route , `key` ,  value ) values('" . (int)$translation['store_id'] . "', '" . (int)$translation['language_id'] . "','" . $this->db->escape($route) . "', '" . $this->db->escape($translation['key']) . "','" . $this->db->escape($translation['value']) . "');");
 			}
 		}
 	}

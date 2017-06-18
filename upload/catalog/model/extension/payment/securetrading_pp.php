@@ -40,7 +40,7 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 	}
 
 	public function addReference($order_id, $reference) {
-		$this->db->query("REPLACE INTO " . DB_PREFIX . "securetrading_pp_order SET order_id = " . (int)$order_id . ", transaction_reference = '" . $this->db->escape($reference) . "', `created` = now()");
+		$this->db->query("REPLACE INTO " . DB_PREFIX . "securetrading_pp_order SET order_id = " . (int)$order_id . ", transaction_reference = '" . $this->db->escape($reference) . "', `created` = datetime('now')");
 	}
 
 	public function confirmOrder($order_id, $order_status_id, $comment = '', $notify = false) {
@@ -76,9 +76,9 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 				$trans_type = 'default';
 		}
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "securetrading_pp_order` SET `settle_type` = '" . $this->config->get('securetrading_pp_settle_status') . "', `modified` = now(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $amount . "' WHERE order_id = " . (int)$order_info['order_id']);
+		$this->db->query("UPDATE `" . DB_PREFIX . "securetrading_pp_order` SET `settle_type` = '" . $this->config->get('securetrading_pp_settle_status') . "', `modified` = datetime('now'), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $amount . "' WHERE order_id = " . (int)$order_info['order_id']);
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "securetrading_pp_order_transaction` SET `securetrading_pp_order_id` = '" . (int)$securetrading_pp_order['securetrading_pp_order_id'] . "', `amount` = '" . $amount . "', type = '" . $trans_type . "',  `created` = now()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "securetrading_pp_order_transaction` SET `securetrading_pp_order_id` = '" . (int)$securetrading_pp_order['securetrading_pp_order_id'] . "', `amount` = '" . $amount . "', type = '" . $trans_type . "',  `created` = datetime('now')");
 
 	}
 
